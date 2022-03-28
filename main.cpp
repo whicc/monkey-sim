@@ -3,11 +3,6 @@
 #include<string>
 #include<fstream>
 #include<vector>
-#include<chrono>
-#include<time.h>
-
-using std::this_thread::sleep_for;
-using namespace std::chrono_literals;
 
 void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* letters) {
 
@@ -15,10 +10,10 @@ void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* lett
 	char input;
 	char timestr[26];
 	std::ofstream logfile;
-	std::vector<std::string> matchedWords;
-	int longestWord = 0;
-	int avg = 0;
-	std::string lfname = "monkeylog_" + std::to_string(mn) + ".txt";
+	//std::vector<std::string> matchedWords;
+	//int longestWord = 0;
+	//int avg = 0;
+	std::string lfname = std::to_string(mn) + ".mnklog";
 
 	logfile.open(lfname);
 
@@ -26,27 +21,18 @@ void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* lett
 
 	srand(mn);
 
-	time_t ct = time(NULL);
-	ctime_s(timestr, sizeof timestr, &ct);
-	logfile << "Log started. Monkey began simulation at " << timestr << '.' << std::endl;
-	logfile << "Current settings:" << std::endl;
-	logfile << "Monkey number: " << mn << std::endl;
-	logfile << "Key presses: " << kp << std::endl;
-	logfile << ((mn == spec) ? "Monkey is being spectated." : "Monkey is not being spectated.") << std::endl;
-	logfile << "-----------------" << std::endl << std::endl;
-
 	if (kp > 0) {
 
 		//std::cout << "Typing " << kp << " characters." << std::endl;
 
-		for (int i = 0; i <= kp; i++) {
+		for (int i = 0; i < kp; i++) {
 
-			logfile << "--Tic " << (i + 1) << "--" << std::endl;
+			logfile << "T" << std::to_string(i + 1) << std::endl;
 
 			input = letters[(rand() % 27)];
 			//input = letters[3];
 
-			logfile << "Letter chosen: " << input << std::endl;
+			logfile << input << std::endl;
 
 			if (input == ' ') {
 
@@ -61,18 +47,18 @@ void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* lett
 							std::cout << std::endl << "MATCH FOUND!" << std::endl << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
 							//std::cout << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
 
-							logfile << "Word found! " << output << std::endl;
-							matchedWords.push_back(output);
-							logfile << "Words found so far: " << matchedWords.size() << std::endl;
+							logfile << "w: " << output << std::endl;
+							//matchedWords.push_back(output);
+							//logfile << "Words found so far: " << matchedWords.size() << std::endl;
 
-							if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
+							//if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
 
-							for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
-							avg /= matchedWords.size();
+							//for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
+							//avg /= matchedWords.size();
 
-							logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
-							logfile << "Average word length: " << avg << std::endl;
-							avg = 0;
+							//logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
+							//logfile << "Average word length: " << avg << std::endl;
+							//avg = 0;
 						}
 					}
 
@@ -93,12 +79,12 @@ void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* lett
 
 		while (true) {
 
-			tics++;
-			logfile << "--Tic " << tics << "--" << std::endl;
+			logfile << "T" << std::to_string(tics) << std::endl;
 
 			input = letters[(rand() % 27)];
+			//input = letters[3];
 
-			logfile << "Letter chosen: " << input << std::endl;
+			logfile << input << std::endl;
 
 			if (input == ' ') {
 
@@ -113,18 +99,18 @@ void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* lett
 							std::cout << std::endl << "MATCH FOUND!" << std::endl << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
 							//std::cout << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
 
-							logfile << "Word found! " << output << std::endl;
-							matchedWords.push_back(output);
-							logfile << "Words found so far: " << matchedWords.size();
+							logfile << "w: " << output << std::endl;
+							//matchedWords.push_back(output);
+							//logfile << "Words found so far: " << matchedWords.size() << std::endl;
 
-							if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
+							//if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
 
-							for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
-							avg /= matchedWords.size();
+							//for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
+							//avg /= matchedWords.size();
 
-							logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
-							logfile << "Average word length: " << avg << std::endl;
-							avg = 0;
+							//logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
+							//logfile << "Average word length: " << avg << std::endl;
+							//avg = 0;
 						}
 					}
 
