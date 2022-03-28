@@ -4,139 +4,64 @@
 #include<fstream>
 #include<vector>
 
-void monkey(int kp, std::vector<std::string> words, int mn, int spec, char* letters) {
+void monkey(int kp, std::vector<std::string> words, int mn, char* letters) {
 
 	std::string output = "";
+	std::string lfname = std::to_string(mn) + ".mnklog";
+
 	char input;
 	char timestr[26];
+
 	std::ofstream logfile;
-	//std::vector<std::string> matchedWords;
-	//int longestWord = 0;
-	//int avg = 0;
-	std::string lfname = std::to_string(mn) + ".mnklog";
 
 	logfile.open(lfname);
 
-	//char letters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+	srand(mn); // TODO: This is not random.
 
-	srand(mn);
+	for (int i = 0; i < kp; i++) {
 
-	if (kp > 0) {
+		logfile << "T" << std::to_string(i + 1) << std::endl;
 
-		//std::cout << "Typing " << kp << " characters." << std::endl;
+		input = letters[(rand() % 27)]; // Grabs one of the letters from the letters list
 
-		for (int i = 0; i < kp; i++) {
+		logfile << input << std::endl;
 
-			logfile << "T" << std::to_string(i + 1) << std::endl;
+		if (input == ' ') { // Start word check
 
-			input = letters[(rand() % 27)];
-			//input = letters[3];
+			if (output != "") { // Arranging the if statements like this means a word will never start with a space
 
-			logfile << input << std::endl;
+				//if (mn == spec) std::cout << output << std::endl; // Output the word if monkey is spectated
 
-			if (input == ' ') {
-
-				if (output != "") {
-
-					if (mn == spec) std::cout << output << std::endl;
-
-					for (int x = 0; x < words.size(); x++) {
-
-						if (output == words[x]) {
-
-							std::cout << std::endl << "MATCH FOUND!" << std::endl << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
-							//std::cout << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
-
-							logfile << "w: " << output << std::endl;
-							//matchedWords.push_back(output);
-							//logfile << "Words found so far: " << matchedWords.size() << std::endl;
-
-							//if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
-
-							//for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
-							//avg /= matchedWords.size();
-
-							//logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
-							//logfile << "Average word length: " << avg << std::endl;
-							//avg = 0;
-						}
-					}
-
-					output = "";
-				}
-			}
-			else {
-
-				output += input;
+				for (int x = 0; x < words.size(); x++) 
+					if (output == words[x])
+						logfile << "w: " << output << std::endl; // A match has been found in the word list and this will be sent to the log
+				
+				output = ""; // Clear the monkeys current word
 			}
 		}
-	}
-	else {
+		else { // The monkey has not tried to start a new word, so add the letter to it's current word
 
-		//std::cout << "Typing indefinitely." << std::endl;
-
-		int tics = 0;
-
-		while (true) {
-
-			logfile << "T" << std::to_string(tics) << std::endl;
-
-			input = letters[(rand() % 27)];
-			//input = letters[3];
-
-			logfile << input << std::endl;
-
-			if (input == ' ') {
-
-				if (output != "") {
-
-					if (mn == spec) std::cout << output << std::endl;
-
-					for (int x = 0; x < words.size(); x++) {
-
-						if (output == words[x]) {
-
-							std::cout << std::endl << "MATCH FOUND!" << std::endl << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
-							//std::cout << "Monkey number " << mn << " typed " << output << std::endl << std::endl;
-
-							logfile << "w: " << output << std::endl;
-							//matchedWords.push_back(output);
-							//logfile << "Words found so far: " << matchedWords.size() << std::endl;
-
-							//if (output.size() > matchedWords[longestWord].size()) longestWord = (matchedWords.size() - 1);
-
-							//for (int y = 0; y < matchedWords.size(); y++) avg += matchedWords[y].size();
-							//avg /= matchedWords.size();
-
-							//logfile << "Longest word found so far: " << matchedWords[longestWord] << std::endl;
-							//logfile << "Average word length: " << avg << std::endl;
-							//avg = 0;
-						}
-					}
-
-					output = "";
-				}
-			}
-			else {
-
-				output += input;
-			}
+			output += input;
 		}
 	}
-
-	logfile.close();
+	
+	logfile.close(); // Excecution complete, close log file.
 }
 
 int main() {
 
 	int kp;
 	int spec;
+
 	std::ifstream wordsfile;
+
 	std::vector<std::string> words;
+
 	std::string line;
+
 	char letters[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ' };
 
-	wordsfile.open("./words.txt");
+	wordsfile.open("./words.txt"); // Any file named this in the working directory will be used as the word list
 
 	while (wordsfile) {
 
@@ -144,26 +69,29 @@ int main() {
 		words.push_back(line);
 	}
 
+	wordsfile.close();
+
 	std::cout << words.size() << " words loaded." << std::endl;
-	std::cout << "Enter amount of keypresses per monkey (Enter 0 to continue until told to stop): ";
+	std::cout << "Enter amount of keypresses per monkey: ";
 	std::cin >> kp;
-	std::cout << "What monkey do you spectate (0 to not spectate): ";
-	std::cin >> spec;
+	//std::cout << "What monkey do you spectate (0 to not spectate): ";
+	//std::cin >> spec;
 	std::cout << "Simulating monkeys..." << std::endl;
 
-	std::thread monkey1(monkey, kp, words, 1, spec, letters);
-	std::thread monkey2(monkey, kp, words, 2, spec, letters);
-	std::thread monkey3(monkey, kp, words, 3, spec, letters);
-	std::thread monkey4(monkey, kp, words, 4, spec, letters);
+	std::thread monkey1(monkey, kp, words, 1, letters); // Start a thread for each monkey
+	std::thread monkey2(monkey, kp, words, 2, letters);
+	std::thread monkey3(monkey, kp, words, 3, letters);
+	std::thread monkey4(monkey, kp, words, 4, letters);
+	std::thread monkey5(monkey, kp, words, 5, letters);
 
-	monkey1.join();
+	monkey1.join(); // The threads have finished, close them
 	monkey2.join();
 	monkey3.join();
 	monkey4.join();
 
 	std::cout << "Done!" << std::endl;
 
-	system("PAUSE");
+	system("PAUSE"); // This is so the window doesn't close the instant execution is complete
 
 	return 0;
 }
