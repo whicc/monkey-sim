@@ -20,11 +20,11 @@ void monkey(int kp, std::vector<std::string> words, int mn, char* letters) {
 
 	for (int i = 0; i < kp; i++) {
 
-		logfile << "T" << std::to_string(i + 1) << std::endl;
+		logfile << "T" << std::to_string(i + 1) << '-';
 
 		input = letters[(rand() % 27)]; // Grabs one of the letters from the letters list
 
-		logfile << input << std::endl;
+		logfile << input << '-';
 
 		if (input == ' ') { // Start word check
 
@@ -34,7 +34,7 @@ void monkey(int kp, std::vector<std::string> words, int mn, char* letters) {
 
 				for (int x = 0; x < words.size(); x++) 
 					if (output == words[x])
-						logfile << "w: " << output << std::endl; // A match has been found in the word list and this will be sent to the log
+						logfile << "w:" << output << '-'; // A match has been found in the word list and this will be sent to the log
 				
 				output = ""; // Clear the monkeys current word
 			}
@@ -88,6 +88,7 @@ int main() {
 	monkey2.join();
 	monkey3.join();
 	monkey4.join();
+	monkey5.join();
 
 	std::cout << "Done!" << std::endl;
 
