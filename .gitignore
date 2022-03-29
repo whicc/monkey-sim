@@ -35,3 +35,6 @@
 .vs/
 Debug/
 Release/
+
+# Monkey logs
+*.mnklog
