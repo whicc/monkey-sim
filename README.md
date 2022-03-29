@@ -1,6 +1,6 @@
 # monkey sim
 
-This is a very simple take on the infinite monkeys theorem. My future plans for this are to optimize it further, allowing it to run faster, and with more monkeys being simulated at once. I am also considering making a compute shader version, so that many more monkeys can be simulated at once.
+This is a very simple take on the infinite monkeys theorem. My future plans for this are to optimize it further, allowing it to run faster, and with more monkeys being simulated at once. I am also considering making a compute shader version, so that many more monkeys can be simulated at once. I may also eventually make a cloud computing version, meaning multiple computers could simulate monkeys at once on either their CPU or GPU, and send the data to a server to vastly increase the odds of finding any meaningful words or sentences.
 
 The two python scripts are for working with data before running the simulation, and after. 
 
