@@ -1,6 +1,6 @@
 # monkey sim
 
-This is a very simple take on the infinite monkeys theorem.
+This is a very simple take on the infinite monkeys theorem. My future plans for this are to optimize it further, allowing it to run faster, and with more monkeys being simulated at once. I am also considering making a compute shader version, so that many more monkeys can be simulated at once.
 
 The two python scripts are for working with data before running the simulation, and after. 
 
